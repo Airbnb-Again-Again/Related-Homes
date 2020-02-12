@@ -112,14 +112,40 @@ const downloadImages = () => {
   }
 };
 
-const getHome = (callback, home) => {
-  Home.findOne({listingId : home}, (err, doc) => {
+////// new CRUD operations \\\\\\
+
+const getHome = (listingId, callback) => {
+  Home.findOne({listingId : listingId}, (err, doc) => {
     if (err) {
       callback(err);
     }
     callback(null, doc);
   });
 }
+
+const postHome = (listingId, callback) => {
+  const newHome = new Home({
+    listingId: listingId,
+    images: getRandomPictures(),
+    homeCategory: getRandomCategory(),
+    bedCount: getRandomInt(1,11),
+    listingTitle: faker.fake('{{commerce.productAdjective}} {{company.catchPhraseDescriptor}} Home!'),
+    starCount: getRandomStarCount(),
+    reviewCount: getRandomInt(0, 301),
+    pricePerNight: getRandomInt(40, 301),
+  });
+  newHome.save((err) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      console.log(`Saved to db: listing #${listingId}`);
+      callback(null, data);
+    }
+  });
+}
+
+// ------ \\
 
 const getThreeHomes = (callback) => {
   let random = getRandomInt(0,101);
@@ -132,7 +158,8 @@ const getThreeHomes = (callback) => {
 }
 
 module.exports = {
-   getHome,
    getThreeHomes,
-   seedData
+   seedData,
+   getHome,
+   postHome,
 };
