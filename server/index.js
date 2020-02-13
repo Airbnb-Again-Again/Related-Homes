@@ -41,7 +41,7 @@ app.get('/related-homes/:listingId', (req, res) => {
   })
 });
 
-app.post('/related-homes/', (req, res) => {
+app.post('/related-homes/newListing', (req, res) => {
   //create insert function
   const listingId = req.params.listingId;
   db.postHome(listingId, (err, data) => {

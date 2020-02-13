@@ -5,7 +5,7 @@ Related Home Information Component
 
 READ: `/related-homes/:listingId` -- get a specific home listing
 
-CREATE: `/related-homes/` -- create a new home listing
+CREATE: `/related-homes/newListing` -- create a new home listing
 
 UPDATE: `/related-homes/:listingId` -- update a specific home listing
 
