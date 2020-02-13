@@ -25,4 +25,44 @@ app.get('/api/related-homes/:listingId', (req, res) => {
   }, home)
 })
 
+
+/////// NEW CRUD OPERATIONS \\\\\\\
+
+app.get('/related-homes/:listingId', (req, res) => {
+  //create get function
+  const listingId = req.params.listingId;
+  db.getHome(listingId, (err, home) => {
+    if (err) {
+      console.log(err);
+      res.status(404).send('Error: cannot GET home');
+    } else {
+      res.status(200).send(home);
+    }
+  })
+});
+
+app.post('/related-homes/newListing', (req, res) => {
+  //create insert function
+  const listingId = req.params.listingId;
+  db.postHome(listingId, (err, data) => {
+    if (err) {
+      console.log('Error: cannot POST to db! ', err);
+      res.status(500).send('Error: cannot POST to db!');
+    } else {
+      res.status(201).send(data);
+    }
+  })
+});
+
+app.put('/related-homes/:listingId', (req, res) => {
+  //create update function
+
+});
+
+app.delete('/related-homes/:listingId', (req, res) => {
+  //create delete function
+
+});
+
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
