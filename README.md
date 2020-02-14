@@ -9,7 +9,9 @@ READ: GET `/related-homes/` -- get all home listings
 
 READ: GET `/related-homes/:listingId` -- get a specific home listing
   req.body = none
-  res = {
+  res = 
+  ```
+  {
     id: integer,
     title: string,
     category: string,
@@ -18,9 +20,12 @@ READ: GET `/related-homes/:listingId` -- get a specific home listing
     reviewCount: integer,
     price: integer
   }
+  ```
 
 CREATE: POST `/related-homes/newListing` -- create a new home listing
-  req.body = {
+  req.body = 
+  ```
+  {
     title: string,
     category: string,
     bedCount: integer,
@@ -28,10 +33,13 @@ CREATE: POST `/related-homes/newListing` -- create a new home listing
     reviewCount: integer,
     price: integer
   }
+  ```
   res = status code
 
 UPDATE: PATCH `/related-homes/:listingId` -- update a specific home listing
-  req.body = {
+  req.body = 
+  ```
+  {
     ANY OF
     title: string,
     category: string,
@@ -40,12 +48,16 @@ UPDATE: PATCH `/related-homes/:listingId` -- update a specific home listing
     reviewCount: integer,
     price: integer
   }
+  ```
   res = status code
 
 DELETE: DELETE `/related-homes/:listingId` -- delete a specific home listing
-  req.body = {
+  req.body = 
+  ```
+  {
     listing_id
   }
+  ```
   res = status code
 
 -- FOR IMAGES --
@@ -56,28 +68,40 @@ READ: GET `/related-homes/:id/images/` -- get all images for a specific listing
 
 READ: GET `/related-homes/:id/images/:imageId` -- get a specific image
   req.body = none
-  res = {
+  res = 
+  ```
+  {
     id: integer,
     URL: string,
     listing_id: integer
   }
+  ```
 
 CREATE: POST `/related-homes/:id/images/newImage` -- create a new image
-  req.body = {
+  req.body = 
+  ```
+  {
     URL: string,
     listing_id: integer
   }
+  ```
   res = status code
 
 UPDATE: PUT `/related-homes/:id/images/:imageId` -- replace a specific image
-  req.body = {
+  req.body = 
+  ```
+  {
     id: integer,
     URL: string
   }
+  ```
   res = status code
 
 DELETE: DELETE `/related-homes/:id/images/:imageId` -- delete a specific image
-  req.body = {
+  req.body = 
+  ```
+  {
     id
   }
+  ```
   res = status code
