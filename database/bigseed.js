@@ -1,4 +1,3 @@
-const fs = require('fs');
 const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 const faker = require('faker');
 
