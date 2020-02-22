@@ -6,8 +6,10 @@
   "scripts": {
     "test": "jest",
     "seed": "node database/seed.js",
+    "bigseed": "node --max_old_space_size=8000 database/bigseed.js",
     "start": "nodemon ./server/index.js",
-    "react-dev": "webpack -w"
+    "react-dev": "webpack -w",
+    "psqlschema": "psql postgres < /Users/zacksingh/HR/SDC/Related-Homes/database/postrgesSDC.sql"
   },
   "repository": {
     "type": "git",
