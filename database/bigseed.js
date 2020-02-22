@@ -1,13 +1,11 @@
-const createCsvWriter = require('csv-writer').createArrayCsvWriter;
+const fs = require('fs');
 const faker = require('faker');
+
+const writeUsers = fs.createWriteStream('cassandraDataMini.csv');
+writeUsers.write('id|title|category|bedCount|rating|reviewCount|price|zip|photos\n', 'utf8');
 
 const LISTING_COUNT = 10000000;
 const IMAGE_COUNT_MAX = 15;
-
-const listingWriter = createCsvWriter({
-  header: ['id', 'title', 'category', 'bedCount', 'rating', 'reviewCount', 'price'],
-  path: '/Users/zacksingh/HR/SDC/Related-Homes/database/data/listingData.csv'
-});
 
 const getRandomCategory = () => {
   const categories = ['Entire House', 'Entire Apartment', 'Entire Condominium', 'Entire Cottage', 'Entire Serviced Apartment', 'Tree House', 'Private Home', 'Loft', 'Hotel', 'Townhouse', 'Villa', 'Resort', 'Cabin']
@@ -29,24 +27,157 @@ const getRandomRating = () => {
   return randomNum;
 }
 
-let listings = [];
+function writeTenMillionListings(writer, encoding, callback) {
+  let i = LISTING_COUNT;
+  let id = 0;
+  function write() {
+    let ok = true;
+    do {
+      i -= 1;
+      id += 1;
+      let title = faker.fake('{{commerce.productAdjective}} {{company.catchPhraseDescriptor}} Home!');
+      let category = getRandomCategory();
+      let bedCount = getRandomInt(1, 11);
+      let rating = getRandomRating();
+      let reviewCount = getRandomInt(0, 501);
+      let price = (getRandomInt(40, 301));
+      let zip = faker.fake('{{address.zipCode}}').substring(0, 5);
 
-for (let i = 0; i < LISTING_COUNT; i++) {
-  let id = i;
-  let title = faker.fake('{{commerce.productAdjective}} {{company.catchPhraseDescriptor}} Home!');
-  let category = getRandomCategory();
-  let bedCount = getRandomInt(1, 11);
-  let rating = getRandomRating();
-  let reviewCount = getRandomInt(0, 501);
-  let price = (getRandomInt(40, 301));
-  let entry = [id, title, category, bedCount, rating, reviewCount, price];
-  listings.push(entry);
-}
+      const data = `${id},${title},${category},${bedCount},${rating},${reviewCount},${price},${zip}\n`;
+      if (i % 500000 === 0) {
+        console.log(i);
+      }
+      if (i === 0) {
+        writer.write(data, encoding, callback);
+      } else {
+        // see if we should continue, or wait
+        // don't pass the callback, because we're not done yet.
+        ok = writer.write(data, encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      // had to stop early!
+      // write some more once it drains
+      writer.once('drain', write);
+    }
+  }
+  write()
+};
 
-listingWriter.writeRecords(listings)
-  .then(() => {
-    console.log('...Done');
-  })
-  .catch(() => {
-    console.log('Error');
-  });
+
+//COMMENT OUT BELOW TO GENERATE LISTING DATA
+
+// writeTenMillionListings(writeUsers, 'utf-8', () => {
+//   writeUsers.end();
+// });
+
+
+
+// ---------------------------------------------- \\
+
+
+
+function writePhotoData(writer, encoding, callback) {
+  let i = LISTING_COUNT * IMAGE_COUNT_MAX;
+  let id = 0;
+  function write() {
+    let ok = true;
+    do {
+      i -= 1;
+      id += 1;
+      let URL = 'https://loremflickr.com/720/400/house';
+      let listingId = getRandomInt(1, LISTING_COUNT);
+
+      const data = `${id},${URL},${listingId}\n`;
+      if (i % 500000 === 0) {
+        console.log(i);
+      }
+      if (id === LISTING_COUNT * IMAGE_COUNT_MAX) {
+        console.log('DONE');
+      }
+      if (i === 0) {
+        writer.write(data, encoding, callback);
+      } else {
+        // see if we should continue, or wait
+        // don't pass the callback, because we're not done yet.
+        ok = writer.write(data, encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      // had to stop early!
+      // write some more once it drains
+      writer.once('drain', write);
+    }
+  }
+  write()
+};
+
+
+//COMMENT OUT BELOW TO GENERATE PHOTO DATA
+
+// writePhotoData(writeUsers, 'utf-8', () => {
+//   writeUsers.end();
+// });
+
+
+
+
+// ---------------------------------------------- \\
+
+
+
+
+function writeCassandraData(writer, encoding, callback) {
+  let i = LISTING_COUNT;
+  let id = 0;
+  let photoId = 0;
+  function write() {
+    let ok = true;
+    do {
+      i -= 1;
+      id += 1;
+      photoCount = getRandomInt(6, 15);
+      let title = faker.fake('{{commerce.productAdjective}} {{company.catchPhraseDescriptor}} Home!');
+      let category = getRandomCategory();
+      let bedCount = getRandomInt(1, 11);
+      let rating = getRandomRating();
+      let reviewCount = getRandomInt(0, 501);
+      let price = (getRandomInt(40, 301));
+      let zip = faker.fake('{{address.zipCode}}').substring(0, 5);
+      let photoURL = 'https://loremflickr.com/720/400/house';
+      let photos = [];
+      for (n = 0; n < photoCount; n++) {
+        photoId += 1;
+        photos.push(photoURL);
+      };
+
+      const data = `${id}|${title}|${category}|${bedCount}|${rating}|${reviewCount}|${price}|${zip}|"[${photos}]"\n`;
+      if (i % 500000 === 0) {
+        console.log(`listings: ${id}, photos: ${photoId}`);
+      }
+      if (i === 0) {
+        console.log(`DONE! listings: ${id}, photos: ${photoId}`);
+        writer.write(data, encoding, callback);
+      } else {
+        // see if we should continue, or wait
+        // don't pass the callback, because we're not done yet.
+        ok = writer.write(data, encoding);
+      }
+
+    } while (i > 0 && ok);
+    if (i > 0) {
+      // had to stop early!
+      // write some more once it drains
+      writer.once('drain', write);
+    }
+  }
+  write()
+};
+
+
+//COMMENT OUT BELOW TO GENERATE CASSANDRA DATA
+
+writeCassandraData(writeUsers, 'utf-8', () => {
+  writeUsers.end();
+});
+

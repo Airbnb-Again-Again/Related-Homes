@@ -95,7 +95,7 @@ const downloadImages = () => {
     request(
       {
         method: 'GET',
-        uri: 'https://loremflickr.com/720/400/house',
+        uri: 'https://loremflickr.com/720/400/house,bedroom,kitchen',
         encoding: null,
       },
       (error, response, body) => {
