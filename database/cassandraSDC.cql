@@ -19,4 +19,4 @@ CREATE TABLE listings
 ) WITH CLUSTERING ORDER BY (rating DESC);
 
 COPY airbnbsdc.listings (id,title,category,bedCount,rating,reviewCount,price,zip,images) 
-FROM '/Users/zacksingh/HR/SDC/Related-Homes/database/data/CassandraData_revID.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+FROM '/Users/zacksingh/HR/SDC/Related-Homes/database/data/CassandraData_revID_2.csv' WITH DELIMITER='|' AND HEADER=TRUE;
