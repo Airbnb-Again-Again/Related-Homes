@@ -115,7 +115,7 @@ class HomeCarousel extends React.Component {
               console.log(home);
               return (
                 <HomeCard key={home.id}>
-                  {/* <PictureCarousel images={home.photos} home={home}/> */}
+                  <PictureCarousel images={home.images} home={home}/>
                   <TitleInfo home={home}/>
                 </HomeCard> )
             })}

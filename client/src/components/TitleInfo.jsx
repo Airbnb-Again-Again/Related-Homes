@@ -41,17 +41,17 @@ class TitleInfo extends React.Component {
     return (
       <TitleCard>
         <Top>
-          <p style={{color: 'grey'}}>{current.homeCategory} - {current.bedCount} beds</p>
+          <p style={{color: 'grey'}}>{current.category} - {current.bedcount} beds</p>
           <Top2>
-            <p><i className="glyphicon glyphicon-star" style={{color: 'red'}}></i>{current.starCount}</p>
-            <p style={{color: 'grey'}}>({current.reviewCount})</p>
+            <p><i className="glyphicon glyphicon-star" style={{color: 'red'}}></i>{current.rating}</p>
+            <p style={{color: 'grey'}}>({current.reviewcount})</p>
           </Top2>
         </Top>
         <Middle>
-          <p>{current.listingTitle}</p>
+          <p>{current.title}</p>
         </Middle>
         <Bottom>
-          <p><strong style={{fontSize: '20px'}}>${current.pricePerNight}</strong> / night</p>
+          <p><strong style={{fontSize: '20px'}}>${current.price}</strong> / night</p>
         </Bottom>
       </TitleCard>
     )

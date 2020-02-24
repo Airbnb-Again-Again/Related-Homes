@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const port = 4321;
@@ -11,13 +12,13 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/related-homes/getHomes', (req, res) => {
   //create get function
-  const listingId = req.params.listingId;
-  const zip = 94114;
+  let zip = req.query.zip ? req.query.zip : 94114;
   db.getHomes(zip, (err, homes) => {
     if (err) {
       console.log(err);
       res.status(404).send('Error: cannot GET homes');
     } else {
+      console.log(homes);
       res.status(200).send(homes);
     }
   })
@@ -25,7 +26,7 @@ app.get('/related-homes/getHomes', (req, res) => {
 
 app.post('/related-homes/newListing', (req, res) => {
   //create insert function
-  const listingId = req.params.listingId;
+  const listingId = req.query.id;
   db.postHome(listingId, (err, data) => {
     if (err) {
       console.log('Error: cannot POST to db! ', err);

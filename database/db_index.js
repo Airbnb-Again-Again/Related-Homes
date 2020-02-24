@@ -74,8 +74,8 @@ const getHomes = (zip, callback) => {
 
   client.execute(query, [zip], { prepare: true })
     .then(result => {
-      console.log(result.rows);
-      callback(null, result);
+      console.log(`Successful GET for 12 homes`);
+      callback(null, result.rows);
     })
     .catch(err => {
       console.log(`Error on db GET for 12 homes`, err);
@@ -84,7 +84,7 @@ const getHomes = (zip, callback) => {
 }
 
 const postHome = (homeData, callback) => {
-  const query = `INSERT INTO listings_test (zip, rating, id, reviewcount, bedcount, category, price, title, images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO listings (zip, rating, id, reviewcount, bedcount, category, price, title, images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   const params = generateNewHome();
   console.log(params);
 
