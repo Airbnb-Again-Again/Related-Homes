@@ -112,9 +112,10 @@ class HomeCarousel extends React.Component {
         <HomesDisplay>
           <HomeContainer translate={this.state.translate}>
             {this.props.homes.map(home => {
+              console.log(home);
               return (
-                <HomeCard key={home.listingId}>
-                  <PictureCarousel images={home.images} home={home}/>
+                <HomeCard key={home.id}>
+                  {/* <PictureCarousel images={home.photos} home={home}/> */}
                   <TitleInfo home={home}/>
                 </HomeCard> )
             })}

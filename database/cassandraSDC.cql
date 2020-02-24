@@ -1,10 +1,10 @@
-DROP KEYSPACE IF EXISTS airbnbsdc_test;
+DROP KEYSPACE IF EXISTS airbnbsdc;
 
-CREATE KEYSPACE airbnbsdc_test WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+CREATE KEYSPACE airbnbsdc WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
 
-USE airbnbsdc_test;
+USE airbnbsdc;
 
-CREATE TABLE listings_test
+CREATE TABLE listings
 (
   id UUID,
   title varchar,
@@ -14,9 +14,9 @@ CREATE TABLE listings_test
   reviewCount smallint,
   price smallint,
   zip int,
-  photos list<varchar>,
+  images list<varchar>,
   PRIMARY KEY (zip, rating, id)
 ) WITH CLUSTERING ORDER BY (rating DESC);
 
-COPY airbnbsdc_test.listings_test (id,title,category,bedCount,rating,reviewCount,price,zip,photos) 
-FROM '/Users/zacksingh/HR/SDC/Related-Homes/database/data/miniCassandraData.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+COPY airbnbsdc.listings (id,title,category,bedCount,rating,reviewCount,price,zip,images) 
+FROM '/Users/zacksingh/HR/SDC/Related-Homes/database/data/CassandraData_revID.csv' WITH DELIMITER='|' AND HEADER=TRUE;

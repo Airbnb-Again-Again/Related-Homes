@@ -2,7 +2,7 @@ const fs = require('fs');
 const faker = require('faker');
 
 const writeUsers = fs.createWriteStream('CassandraData_revID.csv');
-writeUsers.write('id|title|category|bedCount|rating|reviewCount|price|zip|photos\n', 'utf8');
+writeUsers.write('id|title|category|bedCount|rating|reviewCount|price|zip|images\n', 'utf8');
 
 const LISTING_COUNT = 10000000;
 const IMAGE_COUNT_MAX = 15;
@@ -129,7 +129,7 @@ const Uuid = require('cassandra-driver').types.Uuid;
 function writeCassandraData(writer, encoding, callback) {
   let i = LISTING_COUNT;
   // let id = 0;
-  let photoId = 0;
+  let imageId = 0;
   function write() {
     let ok = true;
     do {
@@ -143,20 +143,20 @@ function writeCassandraData(writer, encoding, callback) {
       let reviewCount = getRandomInt(0, 501);
       let price = (getRandomInt(40, 301));
       let zip = faker.fake('{{address.zipCode}}').substring(0, 5);
-      let photoURL = 'https://loremflickr.com/720/400/house';
-      let photos = [];
-      photoCount = getRandomInt(6, 15);
-      for (n = 0; n < photoCount; n++) {
-        photoId += 1;
-        photos.push(photoURL);
+      let imageURL = 'https://loremflickr.com/720/400/house';
+      let images = [];
+      imageCount = getRandomInt(6, 15);
+      for (n = 0; n < imageCount; n++) {
+        imageId += 1;
+        images.push(imageURL);
       };
 
-      const data = `${id}|${title}|${category}|${bedCount}|${rating}|${reviewCount}|${price}|${zip}|"[${photos}]"\n`;
+      const data = `${id}|${title}|${category}|${bedCount}|${rating}|${reviewCount}|${price}|${zip}|"[${images}]"\n`;
       if (i % 500000 === 0) {
-        console.log(`listings_countdown: ${i}, photos: ${photoId}`);
+        console.log(`listings_countdown: ${i}, images: ${imageId}`);
       }
       if (i === 0) {
-        console.log(`DONE! listings_countdown: ${id}, photos: ${photoId}`);
+        console.log(`DONE! listings_countdown: ${id}, images: ${imageId}`);
         writer.write(data, encoding, callback);
       } else {
         // see if we should continue, or wait

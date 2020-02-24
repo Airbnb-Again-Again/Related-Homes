@@ -9,14 +9,14 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 /////// NEW CRUD OPERATIONS \\\\\\\
 
-app.get('/related-homes/:listingId', (req, res) => {
+app.get('/related-homes/getHomes', (req, res) => {
   //create get function
   const listingId = req.params.listingId;
   const zip = 94114;
   db.getHomes(zip, (err, homes) => {
     if (err) {
       console.log(err);
-      res.status(404).send('Error: cannot GET home');
+      res.status(404).send('Error: cannot GET homes');
     } else {
       res.status(200).send(homes);
     }

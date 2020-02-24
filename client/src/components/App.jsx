@@ -35,9 +35,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/getHomes')
+    axios.get('/related-homes/getHomes')
       .then((response) => {
-        this.setState({homes: response.data})
+        console.log(response.data.rows);
+        this.setState({homes: response.data.rows})
       })
       .catch((error) => {
         console.log(error)
