@@ -18,7 +18,6 @@ app.get('/related-homes/getHomes', (req, res) => {
       console.log(err);
       res.status(404).send('Error: cannot GET homes');
     } else {
-      console.log(homes);
       res.status(200).send(homes);
     }
   })
