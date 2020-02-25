@@ -13,22 +13,22 @@ const generateZip = () => {
 }
 
 export let options = {
-  vus: 1000,
-  duration: '60s',
+  vus: 100,
+  duration: '30s',
 };
 
 //uncomment below for GET test
 
-// export default function() {
-//   let zip = generateZip();
-//   http.get(`http://localhost:4321/related-homes/getHomes?zip=${zip}`);
-//   sleep(1);
-// }
+export default function() {
+  let zip = generateZip();
+  http.get(`http://localhost:4321/related-homes/getHomes?zip=${zip}`);
+  sleep(.01);
+}
 
 //uncomment below for POST test
 
-export default function() {
-  let zip = generateZip();
-  http.post(`http://localhost:4321/related-homes/newListing`);
-  sleep(1);
-}
+// export default function() {
+//   let zip = generateZip();
+//   http.post(`http://localhost:4321/related-homes/newListing`);
+//   sleep(1);
+// }
