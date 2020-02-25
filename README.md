@@ -5,7 +5,7 @@ Related Home Information Component
 
 READ: GET `/related-homes/` -- get all home listings
   req.body = none
-  res = Array of 6 objects {home listings} (see next GET)
+  res = Array of 12 objects {home listings} (see next GET)
 
 READ: GET `/related-homes/:listingId` -- get a specific home listing
   req.body = none

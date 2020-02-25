@@ -6,7 +6,7 @@ USE airbnbsdc;
 
 CREATE TABLE listings
 (
-  id bigint,
+  id UUID,
   title varchar,
   category varchar,
   bedCount smallint,
@@ -14,9 +14,9 @@ CREATE TABLE listings
   reviewCount smallint,
   price smallint,
   zip int,
-  photos list<varchar>,
-  PRIMARY KEY ((zip), rating)
-);
+  images list<varchar>,
+  PRIMARY KEY (zip, rating, id)
+) WITH CLUSTERING ORDER BY (rating DESC);
 
-COPY airbnbsdc.listings (id,title,category,bedCount,rating,reviewCount,price,zip,photos) 
-FROM '/Users/zacksingh/HR/SDC/Related-Homes/database/data/cassandraData.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+COPY airbnbsdc.listings (id,title,category,bedCount,rating,reviewCount,price,zip,images) 
+FROM '/Users/zacksingh/HR/SDC/Related-Homes/database/data/CassandraData_revID_2.csv' WITH DELIMITER='|' AND HEADER=TRUE;

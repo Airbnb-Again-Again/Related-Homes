@@ -35,7 +35,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/getHomes')
+    axios.get('/related-homes/getHomes')
       .then((response) => {
         this.setState({homes: response.data})
       })
