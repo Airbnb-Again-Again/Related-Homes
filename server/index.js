@@ -1,4 +1,4 @@
-require('newrelic');
+// require('newrelic');
 const express = require('express');
 const app = express();
 const port = 4321;
@@ -7,12 +7,29 @@ const db = require('../database/db_index.js');
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+app.get('/loaderio-a47683240738fc2203ae8a30af04e321.txt', (req, res) => {
+  //create get function
+  if (err) {
+	  console.log(err);
+	  res.end();
+  } else {
+	  res.sendFile('../client/dist/loaderio-a47683240738fc2203ae8a30af04e321.txt');
+	  res.end();
+  }
+});
+
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; // maximum is exclusive/minimum is inclusive
+};
 
 /////// NEW CRUD OPERATIONS \\\\\\\
 
 app.get('/related-homes/getHomes', (req, res) => {
   //create get function
-  let zip = req.query.zip ? req.query.zip : 94114;
+  let zip = req.query.zip ? req.query.zip : getRandomInt(10000, 99950);
+//  console.log(zip);
   db.getHomes(zip, (err, homes) => {
     if (err) {
       console.log(err);

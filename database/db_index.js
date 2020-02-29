@@ -1,5 +1,5 @@
 const cassandra = require('cassandra-driver');
-const host1 = 'localhost';
+const host1 = '54.183.185.45';
 const PORT1 = 9042;
 const PORT2 = 9043;
 
